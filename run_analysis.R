@@ -2,6 +2,8 @@ library(data.table)
 # 0. load test and training sets and the activities
 # Use the course CDN instead of the original UCI zip file.
 #fileUrl <- "http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip"
+#download.file(fileUrl, destfile = "Dataset.zip", method = "curl")
+#unzip("Dataset.zip")
 testData <- read.table("./UCI HAR Dataset/test/X_test.txt",header=FALSE)
 testData_act <- read.table("./UCI HAR Dataset/test/y_test.txt",header=FALSE)
 testData_sub <- read.table("./UCI HAR Dataset/test/subject_test.txt",header=FALSE)
@@ -32,4 +34,4 @@ bigData_sd<-sapply(bigData,sd,na.rm=TRUE)
 # 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 DT <- data.table(bigData)
 tidy<-DT[,lapply(.SD,mean),by="Activity,Subject"]
-write.table(tidy,file="tidy.csv",sep=",",row.names = FALSE)
+write.table(tidy,file="tidy.txt",sep="/t",row.names = FALSE)
